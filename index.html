@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Race Star - Circuit Editor</title>
+<title>Race Star - Circuit Manager</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,24 +15,29 @@
 }
 
 body {
-    background: #0d0f14;
+    background: #0c0e13;
     color: white;
     font-family: Arial, sans-serif;
-    overflow: hidden;
 }
+
 
 /* HEADER */
 
 header {
     height: 64px;
     background: #171a22;
-    border-bottom: 1px solid #2d313c;
+    border-bottom: 1px solid #30343e;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     padding: 0 14px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 50;
 }
 
 .logo {
@@ -43,37 +49,121 @@ header {
     color: #ff3030;
 }
 
-.save-button {
-    background: #ff3030;
-    color: white;
-    border: none;
-    border-radius: 8px;
-
-    padding: 10px 14px;
-
-    font-weight: bold;
-    font-size: 14px;
+.header-buttons {
+    display: flex;
+    gap: 7px;
 }
 
-/* TOOLBAR */
+.header-button {
+    border: none;
+    background: #30343f;
+    color: white;
 
-.toolbar {
-    height: 58px;
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+.header-button.red {
+    background: #ff3030;
+}
+
+
+/* NAV */
+
+.nav {
+    display: flex;
 
     background: #20232c;
 
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 8px;
+    border-bottom: 1px solid #30343e;
 
     overflow-x: auto;
 }
 
+.nav button {
+    flex: 1;
+
+    min-width: 130px;
+
+    padding: 13px;
+
+    background: transparent;
+
+    color: #aeb3bf;
+
+    border: none;
+
+    font-weight: bold;
+}
+
+.nav button.active {
+    color: white;
+    background: #2b2f3a;
+}
+
+
+/* PAGE */
+
+.page {
+    padding: 15px;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+/* EDITOR */
+
+.editor {
+    position: relative;
+
+    width: 100%;
+
+    height: 55vh;
+
+    min-height: 350px;
+
+    background:
+        linear-gradient(#20242d 1px, transparent 1px),
+        linear-gradient(90deg, #20242d 1px, transparent 1px);
+
+    background-size: 30px 30px;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    border: 1px solid #30343e;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    touch-action: none;
+}
+
+
+/* TOOLBAR */
+
+.toolbar {
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    padding: 10px 0;
+}
+
 .tool {
-    background: #30343f;
+    background: #292d37;
 
     color: white;
 
@@ -92,69 +182,154 @@ header {
     background: #ff3030;
 }
 
-/* EDITOR */
-
-#editor {
-    position: relative;
-
-    width: 100vw;
-
-    height: calc(100vh - 122px);
-
-    background:
-        linear-gradient(#20242d 1px, transparent 1px),
-        linear-gradient(90deg, #20242d 1px, transparent 1px);
-
-    background-size: 30px 30px;
-
-    touch-action: none;
-}
-
-canvas {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-
-    touch-action: none;
-}
 
 /* INFO */
 
-.info {
+.editor-info {
     position: absolute;
 
     left: 12px;
     top: 12px;
 
-    background: rgba(10,12,17,.92);
-
-    padding: 10px 12px;
+    background: rgba(10,12,17,.9);
 
     border-radius: 9px;
+
+    padding: 10px;
 
     font-size: 12px;
 
     pointer-events: none;
 }
 
-.info-title {
-    color: #ff3b3b;
+.editor-info strong {
+    color: #ff4040;
+}
 
-    font-weight: bold;
+
+/* CIRCUITS */
+
+.section-title {
+    margin-top: 25px;
+
+    margin-bottom: 10px;
+
+    font-size: 20px;
+}
+
+
+.track-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 12px;
+}
+
+
+.track-card {
+    background: #181b23;
+
+    border: 1px solid #30343e;
+
+    border-radius: 12px;
+
+    padding: 15px;
+}
+
+
+.track-card h3 {
+    margin-bottom: 7px;
+}
+
+
+.track-card p {
+    color: #aeb3bf;
+
+    font-size: 13px;
 
     margin-bottom: 4px;
 }
 
+
+.track-actions {
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 12px;
+}
+
+
+.track-actions button {
+    flex: 1;
+
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 9px;
+
+    color: white;
+
+    font-weight: bold;
+
+    background: #30343f;
+}
+
+
+.track-actions .open {
+    background: #ff3030;
+}
+
+
+.track-actions .delete {
+    background: #52272a;
+}
+
+
+/* EMPTY */
+
+.empty {
+    background: #181b23;
+
+    border: 1px dashed #3a3f4a;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    color: #8e94a1;
+}
+
+
 /* SAVE PANEL */
 
-.save-panel {
+.overlay {
     display: none;
 
     position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.7);
+
+    z-index: 90;
+}
+
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    z-index: 100;
 
     left: 50%;
     top: 50%;
@@ -163,56 +338,52 @@ canvas {
 
     width: calc(100% - 30px);
 
-    max-width: 400px;
+    max-width: 420px;
 
     background: #191c24;
 
-    border: 1px solid #343945;
+    border: 1px solid #363b47;
 
     border-radius: 15px;
 
     padding: 20px;
-
-    z-index: 20;
-
-    box-shadow: 0 20px 60px rgba(0,0,0,.6);
 }
 
-.save-panel h2 {
+
+.modal h2 {
     margin-bottom: 15px;
 }
+
 
 .input {
     width: 100%;
 
-    background: #0e1015;
-
-    border: 1px solid #353944;
-
-    color: white;
-
     padding: 12px;
+
+    margin-bottom: 10px;
 
     border-radius: 8px;
 
-    margin-bottom: 10px;
+    border: 1px solid #363b47;
+
+    background: #0e1015;
+
+    color: white;
 
     outline: none;
 }
 
-.input:focus {
-    border-color: #ff3030;
-}
 
-.save-actions {
+.modal-buttons {
     display: flex;
 
     gap: 8px;
 
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
-.save-actions button {
+
+.modal-buttons button {
     flex: 1;
 
     padding: 12px;
@@ -224,11 +395,6 @@ canvas {
     font-weight: bold;
 }
 
-.confirm {
-    background: #ff3030;
-
-    color: white;
-}
 
 .cancel {
     background: #30343f;
@@ -236,47 +402,61 @@ canvas {
     color: white;
 }
 
-/* DARK OVERLAY */
 
-.overlay {
-    display: none;
+.confirm {
+    background: #ff3030;
 
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,.65);
-
-    z-index: 10;
+    color: white;
 }
+
 
 /* STATUS */
 
 .status {
     position: fixed;
 
-    bottom: 15px;
+    bottom: 18px;
 
     left: 50%;
 
     transform: translateX(-50%);
 
-    background: rgba(20,23,30,.95);
+    background: #20242d;
 
-    padding: 9px 15px;
+    border: 1px solid #3a3f4a;
+
+    padding: 10px 15px;
 
     border-radius: 20px;
 
-    font-size: 12px;
-
     display: none;
 
-    z-index: 30;
+    z-index: 200;
+
+    font-size: 13px;
 }
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .editor {
+        height: 50vh;
+    }
+
+    .track-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -284,111 +464,195 @@ canvas {
         🏎️ Race <span>Star</span>
     </div>
 
-    <button class="save-button" onclick="openSave()">
-        💾 Opslaan
-    </button>
+    <div class="header-buttons">
+
+        <button
+            class="header-button"
+            onclick="newCircuit()">
+
+            ＋ Nieuw
+
+        </button>
+
+        <button
+            class="header-button red"
+            onclick="openSave()">
+
+            💾 Opslaan
+
+        </button>
+
+    </div>
 
 </header>
 
 
-<div class="toolbar">
+<div class="nav">
 
     <button
-        id="drawTool"
-        class="tool active"
-        onclick="setMode('draw')">
+        id="editorTab"
+        class="active"
+        onclick="showEditor()">
 
-        ✏️ Tekenen
+        🛠️ Editor
 
     </button>
 
-
     <button
-        id="startTool"
-        class="tool"
-        onclick="setMode('start')">
+        id="tracksTab"
+        onclick="showTracks()">
 
-        🏁 Start
-
-    </button>
-
-
-    <button
-        id="pitTool"
-        class="tool"
-        onclick="setMode('pit')">
-
-        🔧 Pitstraat
-
-    </button>
-
-
-    <button
-        class="tool"
-        onclick="undoLast()">
-
-        ↩️ Ongedaan
-
-    </button>
-
-
-    <button
-        class="tool"
-        onclick="clearTrack()">
-
-        🗑 Wissen
+        🏁 Mijn circuits
 
     </button>
 
 </div>
 
 
-<div id="editor">
+<main class="page">
 
-    <canvas id="trackCanvas"></canvas>
 
-    <div class="info">
+<!-- EDITOR -->
 
-        <div class="info-title">
-            CIRCUIT EDITOR
-        </div>
+<section id="editorPage">
 
-        Teken je eigen racebaan met je vinger.
+    <div class="toolbar">
+
+        <button
+            id="drawTool"
+            class="tool active"
+            onclick="setMode('draw')">
+
+            ✏️ Tekenen
+
+        </button>
+
+
+        <button
+            id="startTool"
+            class="tool"
+            onclick="setMode('start')">
+
+            🏁 Start
+
+        </button>
+
+
+        <button
+            id="pitTool"
+            class="tool"
+            onclick="setMode('pit')">
+
+            🔧 Pit
+
+        </button>
+
+
+        <button
+            class="tool"
+            onclick="undoLast()">
+
+            ↩️ Ongedaan
+
+        </button>
+
+
+        <button
+            class="tool"
+            onclick="clearTrack()">
+
+            🗑 Wissen
+
+        </button>
 
     </div>
 
+
+    <div class="editor">
+
+        <canvas id="canvas"></canvas>
+
+        <div class="editor-info">
+
+            <strong>CIRCUIT EDITOR</strong><br>
+
+            Teken je eigen racebaan.
+
+        </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+        📋 Mijn circuits
+    </h2>
+
+
+    <div id="trackList"></div>
+
+</section>
+
+
+<!-- CIRCUITS -->
+
+<section
+    id="tracksPage"
+    style="display:none;">
+
+    <h2 class="section-title">
+        🏁 Opgeslagen circuits
+    </h2>
+
+    <div id="allTracks"></div>
+
+</section>
+
+
+</main>
+
+
+<!-- OVERLAY -->
+
+<div
+    class="overlay"
+    id="overlay"
+    onclick="closeSave()">
 </div>
 
 
-<div class="overlay" id="overlay"></div>
+<!-- SAVE MODAL -->
 
+<div
+    class="modal"
+    id="modal">
 
-<div class="save-panel" id="savePanel">
+    <h2>
+        🏁 Circuit opslaan
+    </h2>
 
-    <h2>🏁 Circuit opslaan</h2>
 
     <input
         id="trackName"
         class="input"
-        type="text"
-        placeholder="Naam van circuit"
+        placeholder="Circuitnaam"
     >
+
 
     <input
         id="trackCity"
         class="input"
-        type="text"
         placeholder="Stad"
     >
+
 
     <input
         id="trackCountry"
         class="input"
-        type="text"
         placeholder="Land"
     >
 
-    <div class="save-actions">
+
+    <div class="modal-buttons">
 
         <button
             class="cancel"
@@ -397,6 +661,7 @@ canvas {
             Annuleren
 
         </button>
+
 
         <button
             class="confirm"
@@ -411,13 +676,21 @@ canvas {
 </div>
 
 
-<div class="status" id="status"></div>
+<div
+    class="status"
+    id="status">
+</div>
 
 
 <script>
 
+
+/* ==============================
+   VARIABLES
+============================== */
+
 const canvas =
-    document.getElementById("trackCanvas");
+    document.getElementById("canvas");
 
 const ctx =
     canvas.getContext("2d");
@@ -433,10 +706,12 @@ let startPoint = null;
 
 let pitPoint = null;
 
+let currentTrackId = null;
 
-/* =========================
+
+/* ==============================
    CANVAS
-========================= */
+============================== */
 
 function resizeCanvas() {
 
@@ -446,11 +721,13 @@ function resizeCanvas() {
     const dpr =
         window.devicePixelRatio || 1;
 
+
     canvas.width =
         rect.width * dpr;
 
     canvas.height =
         rect.height * dpr;
+
 
     ctx.setTransform(
         dpr,
@@ -460,6 +737,7 @@ function resizeCanvas() {
         0,
         0
     );
+
 
     redraw();
 }
@@ -471,56 +749,60 @@ window.addEventListener(
 );
 
 
-/* =========================
+/* ==============================
    POSITION
-========================= */
+============================== */
 
 function getPosition(event) {
 
     const rect =
         canvas.getBoundingClientRect();
 
-    let clientX;
-    let clientY;
+
+    let x;
+    let y;
 
 
     if (event.touches) {
 
-        clientX =
-            event.touches[0].clientX;
+        x =
+            event.touches[0].clientX
+            - rect.left;
 
-        clientY =
-            event.touches[0].clientY;
+        y =
+            event.touches[0].clientY
+            - rect.top;
 
     } else {
 
-        clientX =
-            event.clientX;
+        x =
+            event.clientX
+            - rect.left;
 
-        clientY =
-            event.clientY;
+        y =
+            event.clientY
+            - rect.top;
+
     }
 
 
     return {
-
-        x: clientX - rect.left,
-
-        y: clientY - rect.top
-
+        x,
+        y
     };
 }
 
 
-/* =========================
-   START DRAWING
-========================= */
+/* ==============================
+   DRAW START
+============================== */
 
 function startDrawing(event) {
 
     event.preventDefault();
 
-    const position =
+
+    const pos =
         getPosition(event);
 
 
@@ -530,39 +812,47 @@ function startDrawing(event) {
 
         trackPoints = [];
 
-        trackPoints.push(position);
+        trackPoints.push(pos);
 
         redraw();
 
+        return;
     }
 
 
     if (mode === "start") {
 
-        startPoint = position;
-
-        showStatus("🏁 Start/finish geplaatst");
+        startPoint = pos;
 
         redraw();
 
+        showStatus(
+            "🏁 Start geplaatst"
+        );
+
+        return;
     }
 
 
     if (mode === "pit") {
 
-        pitPoint = position;
-
-        showStatus("🔧 Pitstraat geplaatst");
+        pitPoint = pos;
 
         redraw();
 
+        showStatus(
+            "🔧 Pitstraat geplaatst"
+        );
+
+        return;
     }
+
 }
 
 
-/* =========================
+/* ==============================
    DRAW
-========================= */
+============================== */
 
 function draw(event) {
 
@@ -570,10 +860,11 @@ function draw(event) {
 
     if (mode !== "draw") return;
 
+
     event.preventDefault();
 
 
-    const position =
+    const pos =
         getPosition(event);
 
 
@@ -585,7 +876,7 @@ function draw(event) {
 
     if (!last) {
 
-        trackPoints.push(position);
+        trackPoints.push(pos);
 
         return;
     }
@@ -593,34 +884,36 @@ function draw(event) {
 
     const distance =
         Math.sqrt(
+
             Math.pow(
-                position.x - last.x,
-                2
-            ) +
-            Math.pow(
-                position.y - last.y,
+                pos.x - last.x,
                 2
             )
+
+            +
+
+            Math.pow(
+                pos.y - last.y,
+                2
+            )
+
         );
 
 
-    /*
-       Alleen nieuwe punten toevoegen
-       wanneer de vinger genoeg beweegt.
-    */
-
     if (distance > 5) {
 
-        trackPoints.push(position);
+        trackPoints.push(pos);
 
         redraw();
+
     }
+
 }
 
 
-/* =========================
+/* ==============================
    STOP
-========================= */
+============================== */
 
 function stopDrawing() {
 
@@ -629,9 +922,9 @@ function stopDrawing() {
 }
 
 
-/* =========================
+/* ==============================
    REDRAW
-========================= */
+============================== */
 
 function redraw() {
 
@@ -647,20 +940,13 @@ function redraw() {
     );
 
 
-    /* CIRCUIT */
-
     if (trackPoints.length > 1) {
 
-
-        /* donkere rand */
-
         drawTrack(
-            "#08090c",
+            "#07090d",
             38
         );
 
-
-        /* asfalt */
 
         drawTrack(
             "#555a64",
@@ -668,9 +954,8 @@ function redraw() {
         );
 
 
-        /* middenlijn */
-
         ctx.beginPath();
+
 
         ctx.moveTo(
             trackPoints[0].x,
@@ -702,7 +987,8 @@ function redraw() {
             8
         ]);
 
-        ctx.lineCap = "round";
+        ctx.lineCap =
+            "round";
 
         ctx.stroke();
 
@@ -710,8 +996,6 @@ function redraw() {
 
     }
 
-
-    /* START */
 
     if (startPoint) {
 
@@ -723,8 +1007,6 @@ function redraw() {
 
     }
 
-
-    /* PIT */
 
     if (pitPoint) {
 
@@ -739,9 +1021,9 @@ function redraw() {
 }
 
 
-/* =========================
-   DRAW TRACK
-========================= */
+/* ==============================
+   TRACK
+============================== */
 
 function drawTrack(
     color,
@@ -771,22 +1053,26 @@ function drawTrack(
     }
 
 
-    ctx.strokeStyle = color;
+    ctx.strokeStyle =
+        color;
 
-    ctx.lineWidth = width;
+    ctx.lineWidth =
+        width;
 
-    ctx.lineCap = "round";
+    ctx.lineCap =
+        "round";
 
-    ctx.lineJoin = "round";
+    ctx.lineJoin =
+        "round";
 
     ctx.stroke();
 
 }
 
 
-/* =========================
+/* ==============================
    MARKER
-========================= */
+============================== */
 
 function drawMarker(
     point,
@@ -796,6 +1082,7 @@ function drawMarker(
 
     ctx.beginPath();
 
+
     ctx.arc(
         point.x,
         point.y,
@@ -804,12 +1091,15 @@ function drawMarker(
         Math.PI * 2
     );
 
-    ctx.fillStyle = color;
+
+    ctx.fillStyle =
+        color;
 
     ctx.fill();
 
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle =
+        "white";
 
     ctx.font =
         "bold 13px Arial";
@@ -830,13 +1120,14 @@ function drawMarker(
 }
 
 
-/* =========================
+/* ==============================
    MODE
-========================= */
+============================== */
 
 function setMode(newMode) {
 
-    mode = newMode;
+    mode =
+        newMode;
 
 
     document
@@ -891,9 +1182,9 @@ function setMode(newMode) {
 }
 
 
-/* =========================
+/* ==============================
    UNDO
-========================= */
+============================== */
 
 function undoLast() {
 
@@ -902,7 +1193,7 @@ function undoLast() {
     ) {
 
         showStatus(
-            "Er is niets om ongedaan te maken."
+            "Niets om ongedaan te maken."
         );
 
         return;
@@ -916,9 +1207,9 @@ function undoLast() {
 }
 
 
-/* =========================
+/* ==============================
    CLEAR
-========================= */
+============================== */
 
 function clearTrack() {
 
@@ -927,6 +1218,8 @@ function clearTrack() {
     startPoint = null;
 
     pitPoint = null;
+
+    currentTrackId = null;
 
     redraw();
 
@@ -937,9 +1230,26 @@ function clearTrack() {
 }
 
 
-/* =========================
-   SAVE PANEL
-========================= */
+/* ==============================
+   NEW CIRCUIT
+============================== */
+
+function newCircuit() {
+
+    clearTrack();
+
+    showEditor();
+
+    showStatus(
+        "Nieuw circuit gestart."
+    );
+
+}
+
+
+/* ==============================
+   SAVE
+============================== */
 
 function openSave() {
 
@@ -959,14 +1269,16 @@ function openSave() {
         .getElementById(
             "overlay"
         )
-        .style.display = "block";
+        .style.display =
+        "block";
 
 
     document
         .getElementById(
-            "savePanel"
+            "modal"
         )
-        .style.display = "block";
+        .style.display =
+        "block";
 
 }
 
@@ -977,21 +1289,23 @@ function closeSave() {
         .getElementById(
             "overlay"
         )
-        .style.display = "none";
+        .style.display =
+        "none";
 
 
     document
         .getElementById(
-            "savePanel"
+            "modal"
         )
-        .style.display = "none";
+        .style.display =
+        "none";
 
 }
 
 
-/* =========================
+/* ==============================
    SAVE TRACK
-========================= */
+============================== */
 
 function saveTrack() {
 
@@ -1025,16 +1339,21 @@ function saveTrack() {
     if (!name) {
 
         alert(
-            "Vul een naam voor het circuit in."
+            "Vul een circuitnaam in."
         );
 
         return;
     }
 
 
+    let tracks =
+        getTracks();
+
+
     const track = {
 
         id:
+            currentTrackId ||
             Date.now(),
 
         name:
@@ -1053,35 +1372,48 @@ function saveTrack() {
             startPoint,
 
         pit:
-            pitPoint,
-
-        created:
-            new Date().toISOString()
+            pitPoint
 
     };
 
 
-    let savedTracks =
-        JSON.parse(
-            localStorage.getItem(
-                "raceStarTracks"
-            )
-        ) || [];
+    if (currentTrackId) {
+
+        const index =
+            tracks.findIndex(
+                track =>
+                    track.id ===
+                    currentTrackId
+            );
 
 
-    savedTracks.push(track);
+        if (index !== -1) {
+
+            tracks[index] =
+                track;
+
+        }
+
+    } else {
+
+        tracks.push(track);
+
+    }
 
 
     localStorage.setItem(
         "raceStarTracks",
-        JSON.stringify(
-            savedTracks
-        )
+        JSON.stringify(tracks)
     );
+
+
+    currentTrackId =
+        track.id;
 
 
     closeSave();
 
+    renderTracks();
 
     showStatus(
         "✅ Circuit opgeslagen!"
@@ -1090,9 +1422,344 @@ function saveTrack() {
 }
 
 
-/* =========================
+/* ==============================
+   GET TRACKS
+============================== */
+
+function getTracks() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            "raceStarTracks"
+        )
+    ) || [];
+
+}
+
+
+/* ==============================
+   RENDER TRACKS
+============================== */
+
+function renderTracks() {
+
+    const tracks =
+        getTracks();
+
+
+    const list =
+        document.getElementById(
+            "trackList"
+        );
+
+
+    const all =
+        document.getElementById(
+            "allTracks"
+        );
+
+
+    if (
+        tracks.length === 0
+    ) {
+
+        const empty = `
+            <div class="empty">
+                🏁 Je hebt nog geen circuits.
+                <br><br>
+                Maak hierboven je eerste circuit.
+            </div>
+        `;
+
+
+        list.innerHTML =
+            empty;
+
+        all.innerHTML =
+            empty;
+
+        return;
+    }
+
+
+    const html =
+        tracks.map(
+            track => `
+
+            <div class="track-card">
+
+                <h3>
+                    🏁 ${escapeHTML(track.name)}
+                </h3>
+
+                <p>
+                    📍 ${escapeHTML(track.city || "Onbekend")}
+                </p>
+
+                <p>
+                    🌍 ${escapeHTML(track.country || "Onbekend")}
+                </p>
+
+                <p>
+                    📐 ${track.points.length} baanpunten
+                </p>
+
+                <div class="track-actions">
+
+                    <button
+                        class="open"
+                        onclick="openTrack(${track.id})">
+
+                        Openen
+
+                    </button>
+
+                    <button
+                        class="delete"
+                        onclick="deleteTrack(${track.id})">
+
+                        Verwijderen
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `
+        ).join("");
+
+
+    list.innerHTML =
+        html;
+
+    all.innerHTML =
+        html;
+
+}
+
+
+/* ==============================
+   OPEN TRACK
+============================== */
+
+function openTrack(id) {
+
+    const tracks =
+        getTracks();
+
+
+    const track =
+        tracks.find(
+            track =>
+                track.id === id
+        );
+
+
+    if (!track) return;
+
+
+    trackPoints =
+        track.points || [];
+
+
+    startPoint =
+        track.start || null;
+
+
+    pitPoint =
+        track.pit || null;
+
+
+    currentTrackId =
+        track.id;
+
+
+    document
+        .getElementById(
+            "trackName"
+        )
+        .value =
+        track.name || "";
+
+
+    document
+        .getElementById(
+            "trackCity"
+        )
+        .value =
+        track.city || "";
+
+
+    document
+        .getElementById(
+            "trackCountry"
+        )
+        .value =
+        track.country || "";
+
+
+    showEditor();
+
+
+    setTimeout(
+        redraw,
+        50
+    );
+
+
+    showStatus(
+        "🏁 Circuit geopend."
+    );
+
+}
+
+
+/* ==============================
+   DELETE
+============================== */
+
+function deleteTrack(id) {
+
+    const confirmed =
+        confirm(
+            "Weet je zeker dat je dit circuit wilt verwijderen?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    let tracks =
+        getTracks();
+
+
+    tracks =
+        tracks.filter(
+            track =>
+                track.id !== id
+        );
+
+
+    localStorage.setItem(
+        "raceStarTracks",
+        JSON.stringify(tracks)
+    );
+
+
+    if (
+        currentTrackId === id
+    ) {
+
+        currentTrackId =
+            null;
+
+        clearTrack();
+
+    }
+
+
+    renderTracks();
+
+    showStatus(
+        "🗑 Circuit verwijderd."
+    );
+
+}
+
+
+/* ==============================
+   TABS
+============================== */
+
+function showEditor() {
+
+    document
+        .getElementById(
+            "editorPage"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "tracksPage"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "editorTab"
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    document
+        .getElementById(
+            "tracksTab"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    setTimeout(
+        resizeCanvas,
+        50
+    );
+
+}
+
+
+function showTracks() {
+
+    document
+        .getElementById(
+            "editorPage"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "tracksPage"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "tracksTab"
+        )
+        .classList.add(
+            "active"
+        );
+
+
+    document
+        .getElementById(
+            "editorTab"
+        )
+        .classList.remove(
+            "active"
+        );
+
+
+    renderTracks();
+
+}
+
+
+/* ==============================
    STATUS
-========================= */
+============================== */
 
 function showStatus(message) {
 
@@ -1110,35 +1777,50 @@ function showStatus(message) {
         "block";
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        status.style.display =
-            "none";
+            status.style.display =
+                "none";
 
-    }, 2000);
+        },
+        2000
+    );
 
 }
 
 
-/* =========================
+/* ==============================
+   SECURITY
+============================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* ==============================
    TOUCH
-========================= */
+============================== */
 
 canvas.addEventListener(
     "touchstart",
     startDrawing,
-    {
-        passive: false
-    }
+    { passive: false }
 );
 
 
 canvas.addEventListener(
     "touchmove",
     draw,
-    {
-        passive: false
-    }
+    { passive: false }
 );
 
 
@@ -1148,9 +1830,9 @@ canvas.addEventListener(
 );
 
 
-/* =========================
+/* ==============================
    MOUSE
-========================= */
+============================== */
 
 canvas.addEventListener(
     "mousedown",
@@ -1176,11 +1858,13 @@ canvas.addEventListener(
 );
 
 
-/* =========================
+/* ==============================
    START
-========================= */
+============================== */
 
 resizeCanvas();
+
+renderTracks();
 
 </script>
 
