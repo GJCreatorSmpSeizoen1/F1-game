@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Race Star - Circuit Manager</title>
+<title>Race Star - Circuit Builder</title>
 
 <style>
 
@@ -15,18 +15,22 @@
 }
 
 body {
-    background: #0c0e13;
+    background: #0b0d12;
     color: white;
     font-family: Arial, sans-serif;
 }
 
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
     height: 64px;
+
     background: #171a22;
-    border-bottom: 1px solid #30343e;
+
+    border-bottom: 1px solid #30343f;
 
     display: flex;
     align-items: center;
@@ -56,7 +60,9 @@ header {
 
 .header-button {
     border: none;
+
     background: #30343f;
+
     color: white;
 
     padding: 9px 12px;
@@ -71,14 +77,16 @@ header {
 }
 
 
-/* NAV */
+/* =========================
+   NAV
+========================= */
 
 .nav {
     display: flex;
 
     background: #20232c;
 
-    border-bottom: 1px solid #30343e;
+    border-bottom: 1px solid #30343f;
 
     overflow-x: auto;
 }
@@ -86,58 +94,98 @@ header {
 .nav button {
     flex: 1;
 
-    min-width: 130px;
+    min-width: 140px;
 
     padding: 13px;
 
+    border: none;
+
     background: transparent;
 
-    color: #aeb3bf;
-
-    border: none;
+    color: #9fa5b3;
 
     font-weight: bold;
 }
 
 .nav button.active {
+    background: #2a2e39;
+
     color: white;
-    background: #2b2f3a;
 }
 
 
-/* PAGE */
+/* =========================
+   PAGE
+========================= */
 
 .page {
-    padding: 15px;
-
-    max-width: 900px;
+    max-width: 1000px;
 
     margin: auto;
+
+    padding: 15px;
 }
 
 
-/* EDITOR */
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar {
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    padding-bottom: 10px;
+}
+
+.tool {
+    border: none;
+
+    background: #292d37;
+
+    color: white;
+
+    padding: 10px 13px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.tool.active {
+    background: #ff3030;
+}
+
+
+/* =========================
+   EDITOR
+========================= */
 
 .editor {
     position: relative;
 
     width: 100%;
 
-    height: 55vh;
+    height: 58vh;
 
-    min-height: 350px;
+    min-height: 360px;
 
     background:
-        linear-gradient(#20242d 1px, transparent 1px),
-        linear-gradient(90deg, #20242d 1px, transparent 1px);
+        linear-gradient(#1c2028 1px, transparent 1px),
+        linear-gradient(90deg, #1c2028 1px, transparent 1px);
 
     background-size: 30px 30px;
+
+    border: 1px solid #30343f;
 
     border-radius: 14px;
 
     overflow: hidden;
-
-    border: 1px solid #30343e;
 }
 
 canvas {
@@ -149,42 +197,6 @@ canvas {
     touch-action: none;
 }
 
-
-/* TOOLBAR */
-
-.toolbar {
-    display: flex;
-
-    gap: 7px;
-
-    overflow-x: auto;
-
-    padding: 10px 0;
-}
-
-.tool {
-    background: #292d37;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 8px;
-
-    padding: 10px 13px;
-
-    white-space: nowrap;
-
-    font-weight: bold;
-}
-
-.tool.active {
-    background: #ff3030;
-}
-
-
-/* INFO */
-
 .editor-info {
     position: absolute;
 
@@ -193,21 +205,74 @@ canvas {
 
     background: rgba(10,12,17,.9);
 
-    border-radius: 9px;
-
     padding: 10px;
 
-    font-size: 12px;
+    border-radius: 9px;
 
     pointer-events: none;
+
+    font-size: 12px;
 }
 
 .editor-info strong {
-    color: #ff4040;
+    color: #ff3b3b;
 }
 
 
-/* CIRCUITS */
+/* =========================
+   SETTINGS
+========================= */
+
+.settings {
+    background: #181b23;
+
+    border: 1px solid #30343f;
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    margin-top: 12px;
+}
+
+.settings h2 {
+    font-size: 17px;
+
+    margin-bottom: 12px;
+}
+
+.setting {
+    margin-bottom: 14px;
+}
+
+.setting-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+}
+
+.setting label {
+    color: #b4bac6;
+
+    font-size: 13px;
+}
+
+.value {
+    font-weight: bold;
+}
+
+.setting input[type="range"] {
+    width: 100%;
+}
+
+
+/* =========================
+   TRACK LIST
+========================= */
 
 .section-title {
     margin-top: 25px;
@@ -216,7 +281,6 @@ canvas {
 
     font-size: 20px;
 }
-
 
 .track-list {
     display: grid;
@@ -230,31 +294,27 @@ canvas {
     gap: 12px;
 }
 
-
 .track-card {
     background: #181b23;
 
-    border: 1px solid #30343e;
+    border: 1px solid #30343f;
 
     border-radius: 12px;
 
     padding: 15px;
 }
 
-
 .track-card h3 {
     margin-bottom: 7px;
 }
 
-
 .track-card p {
-    color: #aeb3bf;
+    color: #9da3b0;
 
     font-size: 13px;
 
     margin-bottom: 4px;
 }
-
 
 .track-actions {
     display: flex;
@@ -263,7 +323,6 @@ canvas {
 
     margin-top: 12px;
 }
-
 
 .track-actions button {
     flex: 1;
@@ -276,23 +335,18 @@ canvas {
 
     color: white;
 
-    font-weight: bold;
-
     background: #30343f;
-}
 
+    font-weight: bold;
+}
 
 .track-actions .open {
     background: #ff3030;
 }
 
-
 .track-actions .delete {
     background: #52272a;
 }
-
-
-/* EMPTY */
 
 .empty {
     background: #181b23;
@@ -309,7 +363,9 @@ canvas {
 }
 
 
-/* SAVE PANEL */
+/* =========================
+   MODAL
+========================= */
 
 .overlay {
     display: none;
@@ -318,11 +374,10 @@ canvas {
 
     inset: 0;
 
-    background: rgba(0,0,0,.7);
+    background: rgba(0,0,0,.72);
 
     z-index: 90;
 }
-
 
 .modal {
     display: none;
@@ -338,7 +393,7 @@ canvas {
 
     width: calc(100% - 30px);
 
-    max-width: 420px;
+    max-width: 430px;
 
     background: #191c24;
 
@@ -349,11 +404,9 @@ canvas {
     padding: 20px;
 }
 
-
 .modal h2 {
     margin-bottom: 15px;
 }
-
 
 .input {
     width: 100%;
@@ -373,7 +426,6 @@ canvas {
     outline: none;
 }
 
-
 .modal-buttons {
     display: flex;
 
@@ -381,7 +433,6 @@ canvas {
 
     margin-top: 5px;
 }
-
 
 .modal-buttons button {
     flex: 1;
@@ -395,13 +446,11 @@ canvas {
     font-weight: bold;
 }
 
-
 .cancel {
     background: #30343f;
 
     color: white;
 }
-
 
 .confirm {
     background: #ff3030;
@@ -410,14 +459,15 @@ canvas {
 }
 
 
-/* STATUS */
+/* =========================
+   STATUS
+========================= */
 
 .status {
     position: fixed;
 
-    bottom: 18px;
-
     left: 50%;
+    bottom: 18px;
 
     transform: translateX(-50%);
 
@@ -437,16 +487,14 @@ canvas {
 }
 
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:600px) {
+@media(max-width:650px) {
 
     .editor {
-        height: 50vh;
-    }
-
-    .track-list {
-        grid-template-columns: 1fr;
+        height: 52vh;
     }
 
 }
@@ -494,7 +542,7 @@ canvas {
         class="active"
         onclick="showEditor()">
 
-        🛠️ Editor
+        🛠️ Circuit Builder
 
     </button>
 
@@ -512,18 +560,18 @@ canvas {
 <main class="page">
 
 
-<!-- EDITOR -->
-
 <section id="editorPage">
 
+
     <div class="toolbar">
+
 
         <button
             id="drawTool"
             class="tool active"
             onclick="setMode('draw')">
 
-            ✏️ Tekenen
+            ✏️ Baan tekenen
 
         </button>
 
@@ -533,7 +581,7 @@ canvas {
             class="tool"
             onclick="setMode('start')">
 
-            🏁 Start
+            🏁 Start/Finish
 
         </button>
 
@@ -543,7 +591,7 @@ canvas {
             class="tool"
             onclick="setMode('pit')">
 
-            🔧 Pit
+            🔧 Pitstraat tekenen
 
         </button>
 
@@ -574,9 +622,78 @@ canvas {
 
         <div class="editor-info">
 
-            <strong>CIRCUIT EDITOR</strong><br>
+            <strong>CIRCUIT BUILDER</strong><br>
 
-            Teken je eigen racebaan.
+            Kies een tool en teken met je vinger.
+
+        </div>
+
+    </div>
+
+
+    <div class="settings">
+
+        <h2>
+            ⚙️ Baaninstellingen
+        </h2>
+
+
+        <div class="setting">
+
+            <div class="setting-top">
+
+                <label>
+                    Racebaan breedte
+                </label>
+
+                <div
+                    class="value"
+                    id="widthValue">
+
+                    30
+
+                </div>
+
+            </div>
+
+            <input
+                id="widthRange"
+                type="range"
+                min="20"
+                max="60"
+                value="30"
+                oninput="changeWidth()"
+            >
+
+        </div>
+
+
+        <div class="setting">
+
+            <div class="setting-top">
+
+                <label>
+                    Pitstraat breedte
+                </label>
+
+                <div
+                    class="value"
+                    id="pitWidthValue">
+
+                    18
+
+                </div>
+
+            </div>
+
+            <input
+                id="pitWidthRange"
+                type="range"
+                min="10"
+                max="40"
+                value="18"
+                oninput="changePitWidth()"
+            >
 
         </div>
 
@@ -588,12 +705,13 @@ canvas {
     </h2>
 
 
-    <div id="trackList"></div>
+    <div
+        id="trackList">
+    </div>
+
 
 </section>
 
-
-<!-- CIRCUITS -->
 
 <section
     id="tracksPage"
@@ -603,7 +721,9 @@ canvas {
         🏁 Opgeslagen circuits
     </h2>
 
-    <div id="allTracks"></div>
+    <div
+        id="allTracks">
+    </div>
 
 </section>
 
@@ -611,16 +731,12 @@ canvas {
 </main>
 
 
-<!-- OVERLAY -->
-
 <div
     class="overlay"
     id="overlay"
     onclick="closeSave()">
 </div>
 
-
-<!-- SAVE MODAL -->
 
 <div
     class="modal"
@@ -685,9 +801,9 @@ canvas {
 <script>
 
 
-/* ==============================
+/* =========================
    VARIABLES
-============================== */
+========================= */
 
 const canvas =
     document.getElementById("canvas");
@@ -702,16 +818,20 @@ let drawing = false;
 
 let trackPoints = [];
 
-let startPoint = null;
+let pitPoints = [];
 
-let pitPoint = null;
+let startPoint = null;
 
 let currentTrackId = null;
 
+let trackWidth = 30;
 
-/* ==============================
+let pitWidth = 18;
+
+
+/* =========================
    CANVAS
-============================== */
+========================= */
 
 function resizeCanvas() {
 
@@ -740,6 +860,7 @@ function resizeCanvas() {
 
 
     redraw();
+
 }
 
 
@@ -749,9 +870,9 @@ window.addEventListener(
 );
 
 
-/* ==============================
+/* =========================
    POSITION
-============================== */
+========================= */
 
 function getPosition(event) {
 
@@ -790,12 +911,13 @@ function getPosition(event) {
         x,
         y
     };
+
 }
 
 
-/* ==============================
-   DRAW START
-============================== */
+/* =========================
+   START DRAW
+========================= */
 
 function startDrawing(event) {
 
@@ -806,7 +928,11 @@ function startDrawing(event) {
         getPosition(event);
 
 
-    if (mode === "draw") {
+    /* RACEBAAN */
+
+    if (
+        mode === "draw"
+    ) {
 
         drawing = true;
 
@@ -817,48 +943,58 @@ function startDrawing(event) {
         redraw();
 
         return;
+
     }
 
 
-    if (mode === "start") {
+    /* PITSTRAAT */
 
-        startPoint = pos;
+    if (
+        mode === "pit"
+    ) {
+
+        drawing = true;
+
+        pitPoints = [];
+
+        pitPoints.push(pos);
+
+        redraw();
+
+        return;
+
+    }
+
+
+    /* START */
+
+    if (
+        mode === "start"
+    ) {
+
+        startPoint =
+            pos;
 
         redraw();
 
         showStatus(
-            "🏁 Start geplaatst"
+            "🏁 Start/finish geplaatst"
         );
 
         return;
-    }
 
-
-    if (mode === "pit") {
-
-        pitPoint = pos;
-
-        redraw();
-
-        showStatus(
-            "🔧 Pitstraat geplaatst"
-        );
-
-        return;
     }
 
 }
 
 
-/* ==============================
-   DRAW
-============================== */
+/* =========================
+   MOVE
+========================= */
 
 function draw(event) {
 
     if (!drawing) return;
-
-    if (mode !== "draw") return;
 
 
     event.preventDefault();
@@ -868,17 +1004,42 @@ function draw(event) {
         getPosition(event);
 
 
+    let points;
+
+
+    if (
+        mode === "draw"
+    ) {
+
+        points =
+            trackPoints;
+
+    } else if (
+        mode === "pit"
+    ) {
+
+        points =
+            pitPoints;
+
+    } else {
+
+        return;
+
+    }
+
+
     const last =
-        trackPoints[
-            trackPoints.length - 1
+        points[
+            points.length - 1
         ];
 
 
     if (!last) {
 
-        trackPoints.push(pos);
+        points.push(pos);
 
         return;
+
     }
 
 
@@ -900,9 +1061,11 @@ function draw(event) {
         );
 
 
-    if (distance > 5) {
+    if (
+        distance > 5
+    ) {
 
-        trackPoints.push(pos);
+        points.push(pos);
 
         redraw();
 
@@ -911,9 +1074,9 @@ function draw(event) {
 }
 
 
-/* ==============================
+/* =========================
    STOP
-============================== */
+========================= */
 
 function stopDrawing() {
 
@@ -922,9 +1085,9 @@ function stopDrawing() {
 }
 
 
-/* ==============================
+/* =========================
    REDRAW
-============================== */
+========================= */
 
 function redraw() {
 
@@ -940,80 +1103,66 @@ function redraw() {
     );
 
 
-    if (trackPoints.length > 1) {
+    /* RACEBAAN */
 
-        drawTrack(
+    if (
+        trackPoints.length > 1
+    ) {
+
+        drawPath(
+            trackPoints,
             "#07090d",
-            38
+            trackWidth + 8
         );
 
 
-        drawTrack(
+        drawPath(
+            trackPoints,
             "#555a64",
-            30
+            trackWidth
         );
 
 
-        ctx.beginPath();
-
-
-        ctx.moveTo(
-            trackPoints[0].x,
-            trackPoints[0].y
+        drawCenterLine(
+            trackPoints
         );
-
-
-        for (
-            let i = 1;
-            i < trackPoints.length;
-            i++
-        ) {
-
-            ctx.lineTo(
-                trackPoints[i].x,
-                trackPoints[i].y
-            );
-
-        }
-
-
-        ctx.strokeStyle =
-            "#ffffff";
-
-        ctx.lineWidth = 2;
-
-        ctx.setLineDash([
-            8,
-            8
-        ]);
-
-        ctx.lineCap =
-            "round";
-
-        ctx.stroke();
-
-        ctx.setLineDash([]);
 
     }
 
+
+    /* PITSTRAAT */
+
+    if (
+        pitPoints.length > 1
+    ) {
+
+        drawPath(
+            pitPoints,
+            "#07090d",
+            pitWidth + 8
+        );
+
+
+        drawPath(
+            pitPoints,
+            "#414750",
+            pitWidth
+        );
+
+
+        drawPitLine(
+            pitPoints
+        );
+
+    }
+
+
+    /* START */
 
     if (startPoint) {
 
-        drawMarker(
-            startPoint,
-            "#22c55e",
-            "🏁"
-        );
-
-    }
-
-
-    if (pitPoint) {
-
-        drawMarker(
-            pitPoint,
-            "#3b82f6",
-            "🔧"
+        drawStartLine(
+            startPoint
         );
 
     }
@@ -1021,33 +1170,39 @@ function redraw() {
 }
 
 
-/* ==============================
-   TRACK
-============================== */
+/* =========================
+   PATH
+========================= */
 
-function drawTrack(
+function drawPath(
+    points,
     color,
     width
 ) {
+
+    if (
+        points.length < 2
+    ) return;
+
 
     ctx.beginPath();
 
 
     ctx.moveTo(
-        trackPoints[0].x,
-        trackPoints[0].y
+        points[0].x,
+        points[0].y
     );
 
 
     for (
         let i = 1;
-        i < trackPoints.length;
+        i < points.length;
         i++
     ) {
 
         ctx.lineTo(
-            trackPoints[i].x,
-            trackPoints[i].y
+            points[i].x,
+            points[i].y
         );
 
     }
@@ -1070,61 +1225,183 @@ function drawTrack(
 }
 
 
-/* ==============================
-   MARKER
-============================== */
+/* =========================
+   CENTER LINE
+========================= */
 
-function drawMarker(
-    point,
-    color,
-    emoji
+function drawCenterLine(
+    points
 ) {
+
+    if (
+        points.length < 2
+    ) return;
+
 
     ctx.beginPath();
 
 
-    ctx.arc(
-        point.x,
-        point.y,
-        17,
-        0,
-        Math.PI * 2
+    ctx.moveTo(
+        points[0].x,
+        points[0].y
     );
 
 
-    ctx.fillStyle =
-        color;
+    for (
+        let i = 1;
+        i < points.length;
+        i++
+    ) {
 
-    ctx.fill();
+        ctx.lineTo(
+            points[i].x,
+            points[i].y
+        );
 
-
-    ctx.fillStyle =
-        "white";
-
-    ctx.font =
-        "bold 13px Arial";
-
-    ctx.textAlign =
-        "center";
-
-    ctx.textBaseline =
-        "middle";
+    }
 
 
-    ctx.fillText(
-        emoji,
-        point.x,
-        point.y
-    );
+    ctx.strokeStyle =
+        "#ffffff";
+
+    ctx.lineWidth =
+        2;
+
+    ctx.setLineDash([
+        8,
+        8
+    ]);
+
+    ctx.lineCap =
+        "round";
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
 
 }
 
 
-/* ==============================
-   MODE
-============================== */
+/* =========================
+   PIT LINE
+========================= */
 
-function setMode(newMode) {
+function drawPitLine(
+    points
+) {
+
+    if (
+        points.length < 2
+    ) return;
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        points[0].x,
+        points[0].y
+    );
+
+
+    for (
+        let i = 1;
+        i < points.length;
+        i++
+    ) {
+
+        ctx.lineTo(
+            points[i].x,
+            points[i].y
+        );
+
+    }
+
+
+    ctx.strokeStyle =
+        "#f5c542";
+
+    ctx.lineWidth =
+        2;
+
+    ctx.setLineDash([
+        7,
+        7
+    ]);
+
+    ctx.lineCap =
+        "round";
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+}
+
+
+/* =========================
+   START FINISH
+========================= */
+
+function drawStartLine(
+    point
+) {
+
+    const size = 25;
+
+
+    ctx.save();
+
+
+    for (
+        let row = 0;
+        row < 4;
+        row++
+    ) {
+
+        for (
+            let col = 0;
+            col < 2;
+            col++
+        ) {
+
+            ctx.fillStyle =
+                (row + col) % 2 === 0
+                ? "#ffffff"
+                : "#111111";
+
+
+            ctx.fillRect(
+
+                point.x - size / 2
+                + col * (size / 2),
+
+                point.y - size / 2
+                + row * (size / 4),
+
+                size / 2,
+
+                size / 4
+
+            );
+
+        }
+
+    }
+
+
+    ctx.restore();
+
+}
+
+
+/* =========================
+   MODE
+========================= */
+
+function setMode(
+    newMode
+) {
 
     mode =
         newMode;
@@ -1132,20 +1409,38 @@ function setMode(newMode) {
 
     document
         .querySelectorAll(".tool")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.classList.remove(
-                "active"
-            );
+                button.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 
-    if (newMode === "draw") {
+    const ids = {
+
+        draw:
+            "drawTool",
+
+        pit:
+            "pitTool",
+
+        start:
+            "startTool"
+
+    };
+
+
+    if (
+        ids[newMode]
+    ) {
 
         document
             .getElementById(
-                "drawTool"
+                ids[newMode]
             )
             .classList.add(
                 "active"
@@ -1154,102 +1449,186 @@ function setMode(newMode) {
     }
 
 
-    if (newMode === "start") {
+    if (
+        newMode === "pit"
+    ) {
 
-        document
-            .getElementById(
-                "startTool"
-            )
-            .classList.add(
-                "active"
-            );
+        showStatus(
+            "🔧 Teken nu je pitstraat"
+        );
 
     }
 
 
-    if (newMode === "pit") {
+    if (
+        newMode === "draw"
+    ) {
 
-        document
-            .getElementById(
-                "pitTool"
-            )
-            .classList.add(
-                "active"
-            );
+        showStatus(
+            "✏️ Teken nu de racebaan"
+        );
 
     }
 
 }
 
 
-/* ==============================
-   UNDO
-============================== */
+/* =========================
+   WIDTH
+========================= */
 
-function undoLast() {
+function changeWidth() {
 
-    if (
-        trackPoints.length === 0
-    ) {
-
-        showStatus(
-            "Niets om ongedaan te maken."
+    trackWidth =
+        Number(
+            document
+                .getElementById(
+                    "widthRange"
+                )
+                .value
         );
 
-        return;
-    }
 
+    document
+        .getElementById(
+            "widthValue"
+        )
+        .textContent =
+        trackWidth;
 
-    trackPoints.pop();
 
     redraw();
 
 }
 
 
-/* ==============================
+/* =========================
+   PIT WIDTH
+========================= */
+
+function changePitWidth() {
+
+    pitWidth =
+        Number(
+            document
+                .getElementById(
+                    "pitWidthRange"
+                )
+                .value
+        );
+
+
+    document
+        .getElementById(
+            "pitWidthValue"
+        )
+        .textContent =
+        pitWidth;
+
+
+    redraw();
+
+}
+
+
+/* =========================
+   UNDO
+========================= */
+
+function undoLast() {
+
+    if (
+        mode === "pit"
+    ) {
+
+        if (
+            pitPoints.length > 0
+        ) {
+
+            pitPoints.pop();
+
+            redraw();
+
+        }
+
+        return;
+
+    }
+
+
+    if (
+        trackPoints.length > 0
+    ) {
+
+        trackPoints.pop();
+
+        redraw();
+
+    }
+
+}
+
+
+/* =========================
    CLEAR
-============================== */
+========================= */
 
 function clearTrack() {
 
     trackPoints = [];
 
-    startPoint = null;
+    pitPoints = [];
 
-    pitPoint = null;
+    startPoint = null;
 
     currentTrackId = null;
 
     redraw();
 
     showStatus(
-        "Circuit gewist."
+        "🗑 Circuit gewist"
     );
 
 }
 
 
-/* ==============================
-   NEW CIRCUIT
-============================== */
+/* =========================
+   NEW
+========================= */
 
 function newCircuit() {
 
     clearTrack();
 
-    showEditor();
+    document
+        .getElementById(
+            "trackName"
+        )
+        .value = "";
 
-    showStatus(
-        "Nieuw circuit gestart."
-    );
+
+    document
+        .getElementById(
+            "trackCity"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "trackCountry"
+        )
+        .value = "";
+
+
+    showEditor();
 
 }
 
 
-/* ==============================
-   SAVE
-============================== */
+/* =========================
+   SAVE MODAL
+========================= */
 
 function openSave() {
 
@@ -1258,10 +1637,11 @@ function openSave() {
     ) {
 
         showStatus(
-            "Teken eerst een circuit."
+            "Teken eerst een racebaan."
         );
 
         return;
+
     }
 
 
@@ -1303,9 +1683,9 @@ function closeSave() {
 }
 
 
-/* ==============================
-   SAVE TRACK
-============================== */
+/* =========================
+   SAVE
+========================= */
 
 function saveTrack() {
 
@@ -1343,6 +1723,7 @@ function saveTrack() {
         );
 
         return;
+
     }
 
 
@@ -1368,26 +1749,36 @@ function saveTrack() {
         points:
             trackPoints,
 
+        pitPoints:
+            pitPoints,
+
         start:
             startPoint,
 
-        pit:
-            pitPoint
+        width:
+            trackWidth,
+
+        pitWidth:
+            pitWidth
 
     };
 
 
-    if (currentTrackId) {
+    if (
+        currentTrackId
+    ) {
 
         const index =
             tracks.findIndex(
-                track =>
-                    track.id ===
+                t =>
+                    t.id ===
                     currentTrackId
             );
 
 
-        if (index !== -1) {
+        if (
+            index !== -1
+        ) {
 
             tracks[index] =
                 track;
@@ -1396,14 +1787,18 @@ function saveTrack() {
 
     } else {
 
-        tracks.push(track);
+        tracks.push(
+            track
+        );
 
     }
 
 
     localStorage.setItem(
         "raceStarTracks",
-        JSON.stringify(tracks)
+        JSON.stringify(
+            tracks
+        )
     );
 
 
@@ -1422,9 +1817,9 @@ function saveTrack() {
 }
 
 
-/* ==============================
+/* =========================
    GET TRACKS
-============================== */
+========================= */
 
 function getTracks() {
 
@@ -1437,9 +1832,9 @@ function getTracks() {
 }
 
 
-/* ==============================
+/* =========================
    RENDER TRACKS
-============================== */
+========================= */
 
 function renderTracks() {
 
@@ -1465,9 +1860,9 @@ function renderTracks() {
 
         const empty = `
             <div class="empty">
-                🏁 Je hebt nog geen circuits.
+                🏁 Nog geen circuits.
                 <br><br>
-                Maak hierboven je eerste circuit.
+                Maak je eerste circuit.
             </div>
         `;
 
@@ -1479,6 +1874,7 @@ function renderTracks() {
             empty;
 
         return;
+
     }
 
 
@@ -1501,7 +1897,18 @@ function renderTracks() {
                 </p>
 
                 <p>
-                    📐 ${track.points.length} baanpunten
+                    🛣️ Racebaan:
+                    ${track.points.length} punten
+                </p>
+
+                <p>
+                    🔧 Pitstraat:
+                    ${
+                        track.pitPoints &&
+                        track.pitPoints.length > 1
+                        ? "Ja"
+                        : "Nee"
+                    }
                 </p>
 
                 <div class="track-actions">
@@ -1513,6 +1920,7 @@ function renderTracks() {
                         Openen
 
                     </button>
+
 
                     <button
                         class="delete"
@@ -1539,9 +1947,9 @@ function renderTracks() {
 }
 
 
-/* ==============================
+/* =========================
    OPEN TRACK
-============================== */
+========================= */
 
 function openTrack(id) {
 
@@ -1551,8 +1959,8 @@ function openTrack(id) {
 
     const track =
         tracks.find(
-            track =>
-                track.id === id
+            t =>
+                t.id === id
         );
 
 
@@ -1563,16 +1971,56 @@ function openTrack(id) {
         track.points || [];
 
 
+    pitPoints =
+        track.pitPoints || [];
+
+
     startPoint =
         track.start || null;
 
 
-    pitPoint =
-        track.pit || null;
-
-
     currentTrackId =
         track.id;
+
+
+    trackWidth =
+        track.width || 30;
+
+
+    pitWidth =
+        track.pitWidth || 18;
+
+
+    document
+        .getElementById(
+            "widthRange"
+        )
+        .value =
+        trackWidth;
+
+
+    document
+        .getElementById(
+            "widthValue"
+        )
+        .textContent =
+        trackWidth;
+
+
+    document
+        .getElementById(
+            "pitWidthRange"
+        )
+        .value =
+        pitWidth;
+
+
+    document
+        .getElementById(
+            "pitWidthValue"
+        )
+        .textContent =
+        pitWidth;
 
 
     document
@@ -1609,25 +2057,23 @@ function openTrack(id) {
 
 
     showStatus(
-        "🏁 Circuit geopend."
+        "🏁 Circuit geopend"
     );
 
 }
 
 
-/* ==============================
+/* =========================
    DELETE
-============================== */
+========================= */
 
 function deleteTrack(id) {
 
-    const confirmed =
-        confirm(
-            "Weet je zeker dat je dit circuit wilt verwijderen?"
-        );
-
-
-    if (!confirmed) return;
+    if (
+        !confirm(
+            "Circuit verwijderen?"
+        )
+    ) return;
 
 
     let tracks =
@@ -1643,16 +2089,15 @@ function deleteTrack(id) {
 
     localStorage.setItem(
         "raceStarTracks",
-        JSON.stringify(tracks)
+        JSON.stringify(
+            tracks
+        )
     );
 
 
     if (
         currentTrackId === id
     ) {
-
-        currentTrackId =
-            null;
 
         clearTrack();
 
@@ -1661,16 +2106,17 @@ function deleteTrack(id) {
 
     renderTracks();
 
+
     showStatus(
-        "🗑 Circuit verwijderd."
+        "🗑 Circuit verwijderd"
     );
 
 }
 
 
-/* ==============================
+/* =========================
    TABS
-============================== */
+========================= */
 
 function showEditor() {
 
@@ -1757,9 +2203,9 @@ function showTracks() {
 }
 
 
-/* ==============================
+/* =========================
    STATUS
-============================== */
+========================= */
 
 function showStatus(message) {
 
@@ -1790,37 +2236,61 @@ function showStatus(message) {
 }
 
 
-/* ==============================
-   SECURITY
-============================== */
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function escapeHTML(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
 
-/* ==============================
+/* =========================
    TOUCH
-============================== */
+========================= */
 
 canvas.addEventListener(
     "touchstart",
     startDrawing,
-    { passive: false }
+    {
+        passive: false
+    }
 );
 
 
 canvas.addEventListener(
     "touchmove",
     draw,
-    { passive: false }
+    {
+        passive: false
+    }
 );
 
 
@@ -1830,9 +2300,9 @@ canvas.addEventListener(
 );
 
 
-/* ==============================
+/* =========================
    MOUSE
-============================== */
+========================= */
 
 canvas.addEventListener(
     "mousedown",
@@ -1858,9 +2328,9 @@ canvas.addEventListener(
 );
 
 
-/* ==============================
+/* =========================
    START
-============================== */
+========================= */
 
 resizeCanvas();
 
