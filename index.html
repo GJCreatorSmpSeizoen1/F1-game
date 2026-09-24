@@ -1,484 +1,1185 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Race Star - Circuit Editor</title>
+<title>Race Star - Circuit Editor</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    body {
-      background: #101218;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+body {
+    background: #0d0f14;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-    header {
-      height: 65px;
-      background: #181b24;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 15px;
-      border-bottom: 1px solid #303440;
-    }
+/* HEADER */
 
-    header h1 {
-      font-size: 20px;
-    }
+header {
+    height: 64px;
+    background: #171a22;
+    border-bottom: 1px solid #2d313c;
 
-    header span {
-      color: #ff3b3b;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    button {
-      border: none;
-      border-radius: 8px;
-      padding: 10px 14px;
-      background: #ff3030;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+    padding: 0 14px;
+}
 
-    button:active {
-      transform: scale(0.96);
-    }
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
 
-    .toolbar {
-      height: 55px;
-      background: #20232d;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px;
-      overflow-x: auto;
-    }
+.logo span {
+    color: #ff3030;
+}
 
-    .toolbar button {
-      background: #303441;
-      white-space: nowrap;
-    }
+.save-button {
+    background: #ff3030;
+    color: white;
+    border: none;
+    border-radius: 8px;
 
-    .toolbar button.active {
-      background: #ff3030;
-    }
+    padding: 10px 14px;
 
-    #editor {
-      position: relative;
-      width: 100vw;
-      height: calc(100vh - 120px);
-      background:
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* TOOLBAR */
+
+.toolbar {
+    height: 58px;
+
+    background: #20232c;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px;
+
+    overflow-x: auto;
+}
+
+.tool {
+    background: #30343f;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px 13px;
+
+    white-space: nowrap;
+
+    font-weight: bold;
+}
+
+.tool.active {
+    background: #ff3030;
+}
+
+/* EDITOR */
+
+#editor {
+    position: relative;
+
+    width: 100vw;
+
+    height: calc(100vh - 122px);
+
+    background:
         linear-gradient(#20242d 1px, transparent 1px),
         linear-gradient(90deg, #20242d 1px, transparent 1px);
-      background-size: 30px 30px;
-      touch-action: none;
-    }
 
-    canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      touch-action: none;
-    }
+    background-size: 30px 30px;
 
-    .info {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: rgba(15, 17, 23, 0.9);
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      pointer-events: none;
-    }
+    touch-action: none;
+}
 
-    .info strong {
-      color: #ff4040;
-    }
-  </style>
+canvas {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    touch-action: none;
+}
+
+/* INFO */
+
+.info {
+    position: absolute;
+
+    left: 12px;
+    top: 12px;
+
+    background: rgba(10,12,17,.92);
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+.info-title {
+    color: #ff3b3b;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+/* SAVE PANEL */
+
+.save-panel {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: calc(100% - 30px);
+
+    max-width: 400px;
+
+    background: #191c24;
+
+    border: 1px solid #343945;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    z-index: 20;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+.save-panel h2 {
+    margin-bottom: 15px;
+}
+
+.input {
+    width: 100%;
+
+    background: #0e1015;
+
+    border: 1px solid #353944;
+
+    color: white;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    margin-bottom: 10px;
+
+    outline: none;
+}
+
+.input:focus {
+    border-color: #ff3030;
+}
+
+.save-actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.save-actions button {
+    flex: 1;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+.confirm {
+    background: #ff3030;
+
+    color: white;
+}
+
+.cancel {
+    background: #30343f;
+
+    color: white;
+}
+
+/* DARK OVERLAY */
+
+.overlay {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.65);
+
+    z-index: 10;
+}
+
+/* STATUS */
+
+.status {
+    position: fixed;
+
+    bottom: 15px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(20,23,30,.95);
+
+    padding: 9px 15px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    display: none;
+
+    z-index: 30;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>🏎️ Race <span>Star</span></h1>
-  <button onclick="clearTrack()">🗑 Wissen</button>
+
+    <div class="logo">
+        🏎️ Race <span>Star</span>
+    </div>
+
+    <button class="save-button" onclick="openSave()">
+        💾 Opslaan
+    </button>
+
 </header>
 
+
 <div class="toolbar">
-  <button id="drawBtn" class="active" onclick="setMode('draw')">
-    ✏️ Baan tekenen
-  </button>
 
-  <button onclick="setMode('start')">
-    🏁 Start
-  </button>
+    <button
+        id="drawTool"
+        class="tool active"
+        onclick="setMode('draw')">
 
-  <button onclick="setMode('pit')">
-    🔧 Pitstraat
-  </button>
+        ✏️ Tekenen
+
+    </button>
+
+
+    <button
+        id="startTool"
+        class="tool"
+        onclick="setMode('start')">
+
+        🏁 Start
+
+    </button>
+
+
+    <button
+        id="pitTool"
+        class="tool"
+        onclick="setMode('pit')">
+
+        🔧 Pitstraat
+
+    </button>
+
+
+    <button
+        class="tool"
+        onclick="undoLast()">
+
+        ↩️ Ongedaan
+
+    </button>
+
+
+    <button
+        class="tool"
+        onclick="clearTrack()">
+
+        🗑 Wissen
+
+    </button>
+
 </div>
+
 
 <div id="editor">
 
-  <canvas id="trackCanvas"></canvas>
+    <canvas id="trackCanvas"></canvas>
 
-  <div class="info">
-    <strong>Circuit Editor</strong><br>
-    Teken met je vinger je circuit
-  </div>
+    <div class="info">
+
+        <div class="info-title">
+            CIRCUIT EDITOR
+        </div>
+
+        Teken je eigen racebaan met je vinger.
+
+    </div>
 
 </div>
 
+
+<div class="overlay" id="overlay"></div>
+
+
+<div class="save-panel" id="savePanel">
+
+    <h2>🏁 Circuit opslaan</h2>
+
+    <input
+        id="trackName"
+        class="input"
+        type="text"
+        placeholder="Naam van circuit"
+    >
+
+    <input
+        id="trackCity"
+        class="input"
+        type="text"
+        placeholder="Stad"
+    >
+
+    <input
+        id="trackCountry"
+        class="input"
+        type="text"
+        placeholder="Land"
+    >
+
+    <div class="save-actions">
+
+        <button
+            class="cancel"
+            onclick="closeSave()">
+
+            Annuleren
+
+        </button>
+
+        <button
+            class="confirm"
+            onclick="saveTrack()">
+
+            Opslaan
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="status" id="status"></div>
+
+
 <script>
 
-const canvas = document.getElementById("trackCanvas");
-const ctx = canvas.getContext("2d");
+const canvas =
+    document.getElementById("trackCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
 
 let mode = "draw";
+
 let drawing = false;
 
 let trackPoints = [];
+
 let startPoint = null;
+
 let pitPoint = null;
 
 
-// Canvas goed instellen
+/* =========================
+   CANVAS
+========================= */
+
 function resizeCanvas() {
 
-  const rect = canvas.getBoundingClientRect();
+    const rect =
+        canvas.getBoundingClientRect();
 
-  const dpr = window.devicePixelRatio || 1;
+    const dpr =
+        window.devicePixelRatio || 1;
 
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
+    canvas.width =
+        rect.width * dpr;
 
-  ctx.scale(dpr, dpr);
+    canvas.height =
+        rect.height * dpr;
 
-  redraw();
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    redraw();
 }
 
-window.addEventListener("resize", resizeCanvas);
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
 
 
-// Positie van vinger/muis bepalen
+/* =========================
+   POSITION
+========================= */
+
 function getPosition(event) {
 
-  const rect = canvas.getBoundingClientRect();
+    const rect =
+        canvas.getBoundingClientRect();
 
-  let x;
-  let y;
+    let clientX;
+    let clientY;
 
-  if (event.touches) {
 
-    x = event.touches[0].clientX - rect.left;
-    y = event.touches[0].clientY - rect.top;
+    if (event.touches) {
 
-  } else {
+        clientX =
+            event.touches[0].clientX;
 
-    x = event.clientX - rect.left;
-    y = event.clientY - rect.top;
+        clientY =
+            event.touches[0].clientY;
 
-  }
+    } else {
 
-  return { x, y };
+        clientX =
+            event.clientX;
+
+        clientY =
+            event.clientY;
+    }
+
+
+    return {
+
+        x: clientX - rect.left,
+
+        y: clientY - rect.top
+
+    };
 }
 
 
-// Tekenen starten
+/* =========================
+   START DRAWING
+========================= */
+
 function startDrawing(event) {
 
-  event.preventDefault();
+    event.preventDefault();
 
-  const pos = getPosition(event);
+    const position =
+        getPosition(event);
 
-  if (mode === "draw") {
 
-    drawing = true;
+    if (mode === "draw") {
+
+        drawing = true;
+
+        trackPoints = [];
+
+        trackPoints.push(position);
+
+        redraw();
+
+    }
+
+
+    if (mode === "start") {
+
+        startPoint = position;
+
+        showStatus("🏁 Start/finish geplaatst");
+
+        redraw();
+
+    }
+
+
+    if (mode === "pit") {
+
+        pitPoint = position;
+
+        showStatus("🔧 Pitstraat geplaatst");
+
+        redraw();
+
+    }
+}
+
+
+/* =========================
+   DRAW
+========================= */
+
+function draw(event) {
+
+    if (!drawing) return;
+
+    if (mode !== "draw") return;
+
+    event.preventDefault();
+
+
+    const position =
+        getPosition(event);
+
+
+    const last =
+        trackPoints[
+            trackPoints.length - 1
+        ];
+
+
+    if (!last) {
+
+        trackPoints.push(position);
+
+        return;
+    }
+
+
+    const distance =
+        Math.sqrt(
+            Math.pow(
+                position.x - last.x,
+                2
+            ) +
+            Math.pow(
+                position.y - last.y,
+                2
+            )
+        );
+
+
+    /*
+       Alleen nieuwe punten toevoegen
+       wanneer de vinger genoeg beweegt.
+    */
+
+    if (distance > 5) {
+
+        trackPoints.push(position);
+
+        redraw();
+    }
+}
+
+
+/* =========================
+   STOP
+========================= */
+
+function stopDrawing() {
+
+    drawing = false;
+
+}
+
+
+/* =========================
+   REDRAW
+========================= */
+
+function redraw() {
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    ctx.clearRect(
+        0,
+        0,
+        rect.width,
+        rect.height
+    );
+
+
+    /* CIRCUIT */
+
+    if (trackPoints.length > 1) {
+
+
+        /* donkere rand */
+
+        drawTrack(
+            "#08090c",
+            38
+        );
+
+
+        /* asfalt */
+
+        drawTrack(
+            "#555a64",
+            30
+        );
+
+
+        /* middenlijn */
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            trackPoints[0].x,
+            trackPoints[0].y
+        );
+
+
+        for (
+            let i = 1;
+            i < trackPoints.length;
+            i++
+        ) {
+
+            ctx.lineTo(
+                trackPoints[i].x,
+                trackPoints[i].y
+            );
+
+        }
+
+
+        ctx.strokeStyle =
+            "#ffffff";
+
+        ctx.lineWidth = 2;
+
+        ctx.setLineDash([
+            8,
+            8
+        ]);
+
+        ctx.lineCap = "round";
+
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+
+    }
+
+
+    /* START */
+
+    if (startPoint) {
+
+        drawMarker(
+            startPoint,
+            "#22c55e",
+            "🏁"
+        );
+
+    }
+
+
+    /* PIT */
+
+    if (pitPoint) {
+
+        drawMarker(
+            pitPoint,
+            "#3b82f6",
+            "🔧"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   DRAW TRACK
+========================= */
+
+function drawTrack(
+    color,
+    width
+) {
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        trackPoints[0].x,
+        trackPoints[0].y
+    );
+
+
+    for (
+        let i = 1;
+        i < trackPoints.length;
+        i++
+    ) {
+
+        ctx.lineTo(
+            trackPoints[i].x,
+            trackPoints[i].y
+        );
+
+    }
+
+
+    ctx.strokeStyle = color;
+
+    ctx.lineWidth = width;
+
+    ctx.lineCap = "round";
+
+    ctx.lineJoin = "round";
+
+    ctx.stroke();
+
+}
+
+
+/* =========================
+   MARKER
+========================= */
+
+function drawMarker(
+    point,
+    color,
+    emoji
+) {
+
+    ctx.beginPath();
+
+    ctx.arc(
+        point.x,
+        point.y,
+        17,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle = color;
+
+    ctx.fill();
+
+
+    ctx.fillStyle = "white";
+
+    ctx.font =
+        "bold 13px Arial";
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        emoji,
+        point.x,
+        point.y
+    );
+
+}
+
+
+/* =========================
+   MODE
+========================= */
+
+function setMode(newMode) {
+
+    mode = newMode;
+
+
+    document
+        .querySelectorAll(".tool")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if (newMode === "draw") {
+
+        document
+            .getElementById(
+                "drawTool"
+            )
+            .classList.add(
+                "active"
+            );
+
+    }
+
+
+    if (newMode === "start") {
+
+        document
+            .getElementById(
+                "startTool"
+            )
+            .classList.add(
+                "active"
+            );
+
+    }
+
+
+    if (newMode === "pit") {
+
+        document
+            .getElementById(
+                "pitTool"
+            )
+            .classList.add(
+                "active"
+            );
+
+    }
+
+}
+
+
+/* =========================
+   UNDO
+========================= */
+
+function undoLast() {
+
+    if (
+        trackPoints.length === 0
+    ) {
+
+        showStatus(
+            "Er is niets om ongedaan te maken."
+        );
+
+        return;
+    }
+
+
+    trackPoints.pop();
+
+    redraw();
+
+}
+
+
+/* =========================
+   CLEAR
+========================= */
+
+function clearTrack() {
 
     trackPoints = [];
 
-    trackPoints.push(pos);
+    startPoint = null;
+
+    pitPoint = null;
 
     redraw();
 
-  }
-
-  else if (mode === "start") {
-
-    startPoint = pos;
-
-    redraw();
-
-  }
-
-  else if (mode === "pit") {
-
-    pitPoint = pos;
-
-    redraw();
-
-  }
-}
-
-
-// Tijdens tekenen
-function draw(event) {
-
-  if (!drawing || mode !== "draw") return;
-
-  event.preventDefault();
-
-  const pos = getPosition(event);
-
-  trackPoints.push(pos);
-
-  redraw();
-}
-
-
-// Tekenen stoppen
-function stopDrawing() {
-
-  drawing = false;
-
-}
-
-
-// Alles tekenen
-function redraw() {
-
-  const rect = canvas.getBoundingClientRect();
-
-  ctx.clearRect(0, 0, rect.width, rect.height);
-
-
-  // CIRCUIT
-
-  if (trackPoints.length > 1) {
-
-    // Buitenste donkere baan
-    ctx.beginPath();
-
-    ctx.moveTo(
-      trackPoints[0].x,
-      trackPoints[0].y
+    showStatus(
+        "Circuit gewist."
     );
 
-    for (let i = 1; i < trackPoints.length; i++) {
+}
 
-      ctx.lineTo(
-        trackPoints[i].x,
-        trackPoints[i].y
-      );
 
+/* =========================
+   SAVE PANEL
+========================= */
+
+function openSave() {
+
+    if (
+        trackPoints.length < 5
+    ) {
+
+        showStatus(
+            "Teken eerst een circuit."
+        );
+
+        return;
     }
 
-    ctx.strokeStyle = "#08090c";
-    ctx.lineWidth = 32;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.stroke();
-
-
-    // Asfalt
-    ctx.beginPath();
-
-    ctx.moveTo(
-      trackPoints[0].x,
-      trackPoints[0].y
-    );
-
-    for (let i = 1; i < trackPoints.length; i++) {
-
-      ctx.lineTo(
-        trackPoints[i].x,
-        trackPoints[i].y
-      );
-
-    }
-
-    ctx.strokeStyle = "#555a64";
-    ctx.lineWidth = 26;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.stroke();
-
-
-    // Middenlijn
-    ctx.beginPath();
-
-    ctx.moveTo(
-      trackPoints[0].x,
-      trackPoints[0].y
-    );
-
-    for (let i = 1; i < trackPoints.length; i++) {
-
-      ctx.lineTo(
-        trackPoints[i].x,
-        trackPoints[i].y
-      );
-
-    }
-
-    ctx.strokeStyle = "#ffffff";
-    ctx.lineWidth = 2;
-    ctx.setLineDash([8, 8]);
-    ctx.stroke();
-
-    ctx.setLineDash([]);
-
-  }
-
-
-  // START
-  if (startPoint) {
-
-    ctx.beginPath();
-
-    ctx.arc(
-      startPoint.x,
-      startPoint.y,
-      15,
-      0,
-      Math.PI * 2
-    );
-
-    ctx.fillStyle = "#22c55e";
-    ctx.fill();
-
-    ctx.fillStyle = "white";
-    ctx.font = "bold 12px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    ctx.fillText(
-      "🏁",
-      startPoint.x,
-      startPoint.y
-    );
-
-  }
-
-
-  // PIT
-  if (pitPoint) {
-
-    ctx.beginPath();
-
-    ctx.arc(
-      pitPoint.x,
-      pitPoint.y,
-      15,
-      0,
-      Math.PI * 2
-    );
-
-    ctx.fillStyle = "#3b82f6";
-    ctx.fill();
-
-    ctx.fillStyle = "white";
-    ctx.font = "bold 12px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    ctx.fillText(
-      "🔧",
-      pitPoint.x,
-      pitPoint.y
-    );
-
-  }
-
-}
-
-
-// Mode veranderen
-function setMode(newMode) {
-
-  mode = newMode;
-
-  document
-    .querySelectorAll(".toolbar button")
-    .forEach(button => {
-      button.classList.remove("active");
-    });
-
-  if (newMode === "draw") {
 
     document
-      .getElementById("drawBtn")
-      .classList.add("active");
+        .getElementById(
+            "overlay"
+        )
+        .style.display = "block";
 
-  }
+
+    document
+        .getElementById(
+            "savePanel"
+        )
+        .style.display = "block";
+
 }
 
 
-// Alles wissen
-function clearTrack() {
+function closeSave() {
 
-  trackPoints = [];
+    document
+        .getElementById(
+            "overlay"
+        )
+        .style.display = "none";
 
-  startPoint = null;
 
-  pitPoint = null;
+    document
+        .getElementById(
+            "savePanel"
+        )
+        .style.display = "none";
 
-  redraw();
 }
 
 
-// Touch events
-canvas.addEventListener(
-  "touchstart",
-  startDrawing,
-  { passive: false }
-);
+/* =========================
+   SAVE TRACK
+========================= */
+
+function saveTrack() {
+
+    const name =
+        document
+            .getElementById(
+                "trackName"
+            )
+            .value
+            .trim();
+
+
+    const city =
+        document
+            .getElementById(
+                "trackCity"
+            )
+            .value
+            .trim();
+
+
+    const country =
+        document
+            .getElementById(
+                "trackCountry"
+            )
+            .value
+            .trim();
+
+
+    if (!name) {
+
+        alert(
+            "Vul een naam voor het circuit in."
+        );
+
+        return;
+    }
+
+
+    const track = {
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        city:
+            city,
+
+        country:
+            country,
+
+        points:
+            trackPoints,
+
+        start:
+            startPoint,
+
+        pit:
+            pitPoint,
+
+        created:
+            new Date().toISOString()
+
+    };
+
+
+    let savedTracks =
+        JSON.parse(
+            localStorage.getItem(
+                "raceStarTracks"
+            )
+        ) || [];
+
+
+    savedTracks.push(track);
+
+
+    localStorage.setItem(
+        "raceStarTracks",
+        JSON.stringify(
+            savedTracks
+        )
+    );
+
+
+    closeSave();
+
+
+    showStatus(
+        "✅ Circuit opgeslagen!"
+    );
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        status.style.display =
+            "none";
+
+    }, 2000);
+
+}
+
+
+/* =========================
+   TOUCH
+========================= */
 
 canvas.addEventListener(
-  "touchmove",
-  draw,
-  { passive: false }
+    "touchstart",
+    startDrawing,
+    {
+        passive: false
+    }
 );
+
 
 canvas.addEventListener(
-  "touchend",
-  stopDrawing
+    "touchmove",
+    draw,
+    {
+        passive: false
+    }
 );
 
-
-// Muis events
-canvas.addEventListener(
-  "mousedown",
-  startDrawing
-);
 
 canvas.addEventListener(
-  "mousemove",
-  draw
+    "touchend",
+    stopDrawing
 );
+
+
+/* =========================
+   MOUSE
+========================= */
 
 canvas.addEventListener(
-  "mouseup",
-  stopDrawing
+    "mousedown",
+    startDrawing
 );
+
 
 canvas.addEventListener(
-  "mouseleave",
-  stopDrawing
+    "mousemove",
+    draw
 );
 
 
-// Start
+canvas.addEventListener(
+    "mouseup",
+    stopDrawing
+);
+
+
+canvas.addEventListener(
+    "mouseleave",
+    stopDrawing
+);
+
+
+/* =========================
+   START
+========================= */
+
 resizeCanvas();
 
 </script>
